@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
     public float speed = 7;
+    public event System.Action OnPlayerDeath;
 
     float halfPlayerWidth;
     float screenHalfWidthInWorldUnits;
@@ -32,6 +33,9 @@ public class PlayerController : MonoBehaviour {
 
     void OnTriggerEnter2D (Collider2D triggerCollider) {
         if (triggerCollider.tag == "Falling Block") {
+            if (OnPlayerDeath != null) {
+                OnPlayerDeath ();
+            }
             Destroy (gameObject);
         }
     }
