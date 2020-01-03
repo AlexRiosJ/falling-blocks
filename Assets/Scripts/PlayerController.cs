@@ -17,16 +17,22 @@ public class PlayerController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        float inputX = Input.GetAxisRaw("Horizontal");
+        float inputX = Input.GetAxisRaw ("Horizontal");
         float velocity = inputX * speed;
-        transform.Translate(Vector2.right * velocity * Time.deltaTime);
+        transform.Translate (Vector2.right * velocity * Time.deltaTime);
 
-        if(transform.position.x + halfPlayerWidth < -screenHalfWidthInWorldUnits) {
+        if (transform.position.x + halfPlayerWidth < -screenHalfWidthInWorldUnits) {
             transform.position = new Vector2 (screenHalfWidthInWorldUnits + halfPlayerWidth, transform.position.y);
         }
 
-        if(transform.position.x - halfPlayerWidth > screenHalfWidthInWorldUnits) {
+        if (transform.position.x - halfPlayerWidth > screenHalfWidthInWorldUnits) {
             transform.position = new Vector2 (-screenHalfWidthInWorldUnits - halfPlayerWidth, transform.position.y);
+        }
+    }
+
+    void OnTriggerEnter2D (Collider2D triggerCollider) {
+        if (triggerCollider.tag == "Falling Block") {
+            Destroy (gameObject);
         }
     }
 }
